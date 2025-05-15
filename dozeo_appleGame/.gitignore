@@ -34,3 +34,5 @@ build/
 
 ### yml 파일
 dozeo_appleGame/src/main/resources/application.yml
+src/main/resources/application.yml
+
