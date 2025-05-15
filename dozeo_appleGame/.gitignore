@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### yml 파일
+dozeo_appleGame/src/main/resources/application.yml
