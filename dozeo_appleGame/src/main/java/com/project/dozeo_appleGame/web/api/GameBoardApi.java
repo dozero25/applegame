@@ -15,7 +15,7 @@ import java.util.Random;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/game/board")
+@RequestMapping("/api/set")
 public class GameBoardApi {
 
     private final GameBoardService boardService;
