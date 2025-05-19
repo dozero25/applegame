@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>사과 게임 - 진행 중</title>
+    <link rel="stylesheet" href="/static/css/game.css" />
+    <link rel="stylesheet" href="/static/css/reset.css" />
+    <link rel="stylesheet" href="/static/css/common.css" />
+</head>
+
+<body>
+    <div class="game-container">
+
+        <div class="board" id="gameBoard">
+            <div class="cell" data-row="0" data-col="0">1</div>
+            <div class="cell" data-row="0" data-col="1">2</div>
+            <div class="cell" data-row="0" data-col="2">3</div>
+            <div class="cell" data-row="0" data-col="3">4</div>
+            <div class="cell" data-row="0" data-col="4">5</div>
+            <div class="cell" data-row="0" data-col="5">6</div>
+            <div class="cell" data-row="0" data-col="6">7</div>
+            <div class="cell" data-row="0" data-col="7">8</div>
+            <div class="cell" data-row="0" data-col="8">9</div>
+            <div class="cell" data-row="0" data-col="9">1</div>
+            <div class="cell" data-row="0" data-col="10">8</div>
+            <div class="cell" data-row="0" data-col="11">7</div>
+            <div class="cell" data-row="0" data-col="12">6</div>
+            <div class="cell" data-row="0" data-col="13">5</div>
+            <div class="cell" data-row="0" data-col="14">4</div>
+            <div class="cell" data-row="0" data-col="15">3</div>
+            <div class="cell" data-row="0" data-col="16">2</div>
+            
+        </div>
+
+        <div class="game-info">
+            <p>현재 점수: <span id="score">0</span></p>
+            <p>남은 턴: <span id="turnsLeft">20</span></p>
+        </div>
+
+        <div class="controls">
+            <button id="undoBtn">되돌리기</button>
+            <button id="restartBtn">다시 시작</button>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+</body>
+
+</html>

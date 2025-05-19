@@ -1,0 +1,11 @@
+body,
+html {
+    height: 100%;
+    font-family: 'Jua', sans-serif, sans-serif;
+    background: linear-gradient(to bottom, #ffecd2 0%, #fcb69f 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}

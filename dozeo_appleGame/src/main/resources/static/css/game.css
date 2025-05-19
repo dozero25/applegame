@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+
+
+.game-container {
+    background: #fff9f8cc;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 800px;
+}
+
+h1 {
+    color: #d62828;
+    margin-bottom: 20px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(17, 40px);
+    grid-template-rows: repeat(10, 40px);
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.cell {
+    background-image: url('/static/images/apple-icons.png');
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+
+    padding-top: 5px;
+}
+
+.cell.empty:hover {
+    background-color: #fcd8d6;
+}
+
+.game-info p {
+    font-size: 18px;
+    margin: 8px 0;
+    color: #333;
+}
+
+.controls button {
+    background-color: #d62828;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+.controls button:hover {
+    background-color: #a61c1c;
+}
+
+.message {
+    margin-top: 20px;
+    color: #d62828;
+    font-weight: bold;
+    min-height: 24px;
+}
