@@ -38,7 +38,6 @@ public class GameBoardApi {
                 .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", boardDTO));
     }
 
-
     @GetMapping("/info")
     public GameBoardDTO getBoard() {
         return boardService.getBoard();
