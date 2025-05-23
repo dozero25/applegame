@@ -290,7 +290,7 @@ class ComponentEvent {
     }
 
     startTimer() {
-        const totalTime = 60000;
+        const totalTime = 120000;
         const bar = document.getElementById("timerBar");
         const startTime = Date.now();
 
