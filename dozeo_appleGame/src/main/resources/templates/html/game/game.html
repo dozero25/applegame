@@ -11,11 +11,24 @@
 
 <body>
     <div class="game-container" id="game-container">
+        <div class="timer-container">
+            <div class="timerBar" id="timerBar"></div>
+        </div>
+
         <div class="board" id="gameBoard">
+
+        </div>
+        <div id="gameModal" class="modal hidden">
+            <div class="modal-content">
+                <p>게임 종료</p>
+                <div>점수 : <span id="finalScore">0</span></div>
+                <button id="undoBtn">되돌리기</button>
+                <button id="restartBtn">다시 시작</button>
+            </div>
         </div>
 
         <div class="game-info">
-            <p>점수: <span id="score">0</span></p>
+            <p>점수 : <span id="score">0</span></p>
         </div>
 
         <div class="controls">
@@ -27,4 +40,5 @@
     </div>
 </body>
 <script src="/static/js/game/game.js"></script>
+
 </html>

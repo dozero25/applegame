@@ -2,6 +2,7 @@ window.onload = async () => {
     await GameSetService.getInstance().showInfoGameLogic();
     const compEvent = ComponentEvent.getInstance();
     compEvent.clickBtn();
+    compEvent.startTimer();
 }
 
 
@@ -85,12 +86,12 @@ class ComponentEvent {
         // DOM 요소 참조
         this.gameBoard = document.getElementById('gameBoard');
         this.scoreElement = document.getElementById('score');
-        
+
         // 드레그 박스 요소 및 시작 좌표
         this.dragBox = null;
         this.startX = 0;
         this.startY = 0;
-        
+
         // 점수 초기화
         this.score = 0;
 
@@ -163,10 +164,10 @@ class ComponentEvent {
         // 테두리 색 변경: 합이 10이면 빨간색, 아니면 노란색
         selectedCells.forEach(cell => {
             if (totalScore === 10) {
-            cell.classList.add('red-border'); // 조건 충족 시 강조
-        } else {
-            cell.classList.remove('red-border'); // 조건 불충족 시 원상복구
-        }
+                cell.classList.add('red-border'); // 조건 충족 시 강조
+            } else {
+                cell.classList.remove('red-border'); // 조건 불충족 시 원상복구
+            }
         });
     }
 
@@ -235,11 +236,11 @@ class ComponentEvent {
             cell.classList.remove('selected');
         });
     }
-    
+
     // 드래그 박스 영역에 포함된 셀에 'selected' 클래스 추가
     highlightSelectedCells(boxRect) {
         this.clearSelection();
-        
+
         // 게임 보드의 위치 및 크기 정보를 가져옴
         const boardRect = this.gameBoard.getBoundingClientRect();
 
@@ -287,6 +288,41 @@ class ComponentEvent {
     resetGame() {
         window.location.href = "/game";
     }
+
+    startTimer() {
+        const totalTime = 60000;
+        const bar = document.getElementById("timerBar");
+        const startTime = Date.now();
+
+        bar.style.transform = 'scaleX(1)';
+
+        const modal = document.getElementById('gameModal');
+        const finalScoreElement = document.getElementById('finalScore');
+
+        function showGameOverModel() {
+            modal.classList.remove('hidden');
+        }
+
+        const timerInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const timeLeft = totalTime - elapsed;
+            const percent = Math.max(0, 1 - (elapsed / totalTime));
+            bar.style.transform = `scaleX(${percent})`;
+
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                showGameOverModel();
+
+                if(finalScoreElement){
+                    finalScoreElement.textContent = this.score;
+                }
+            }
+        }, 50);
+
+    }
+
+
 
 
 }
