@@ -49,7 +49,7 @@
 |Language	| Java, JavaScript |
 |Frontend	| HTML, CSS, JavaScript|
 |Backend	| Spring Boot (Spring Data JPA 사용 예정)|
-|Docs	| Swagger (예정)|
+|Docs	| Swagger |
 |ORM	| Spring Data JPA (예정)|
 |DB |	MySQL (예정)|
 |배포 |	AWS EC2 or S3 (예정)|
