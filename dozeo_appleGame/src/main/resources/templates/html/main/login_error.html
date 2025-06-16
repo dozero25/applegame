@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/reset.css" />
+    <link rel="stylesheet" href="/static/css/login.css" />
+    <link rel="stylesheet" href="/static/css/header.css" />
+
+    </style>
+</head>
+
+<body>
+    <header class="header">
+    </header>
+    <!-- LOGIN MODULE -->
+    <div class="login">
+        <div class="wrap">
+
+            <!-- LOGIN FORM -->
+            <div class="user">
+                <!-- LOGO -->
+                <div class="logo">
+                    <a href="#"><img src="http://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/logo.png"
+                            alt=""></a>
+                </div>
+                <!-- TOGGLE -->
+                <div id="toggle-wrap">
+                    <div id="toggle-terms">
+                        <div id="cross">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORM -->
+                <div class="form-wrap">
+                    <!-- TABS -->
+                    <div class="tabs">
+                        <h3 class="login-tab"><a class="log-in active" href="#login-tab-content"><span>Login<span></a>
+                        </h3>
+                        <h3 class="signup-tab"><a class="sign-up" href="#signup-tab-content"><span>Sign Up</span></a>
+                        </h3>
+                    </div>
+                    <!-- TABS CONTENT -->
+                    <div class="tabs-content">
+                        <!-- TABS CONTENT LOGIN -->
+                        <div id="login-tab-content" class="active">
+                            <form id="login" action="/login/process" method="post">
+                                <input type="text" class="input error" name="username" id="username" autocomplete="off"
+                                    placeholder="Username">
+                                <input type="password" class="input error" name="password" id="password"
+                                    autocomplete="off" placeholder="Password">
+                                <input type="checkbox" class="checkbox" checked id="remember_me">
+                                <label for="remember_me">Remember me</label>
+                                <input type="submit" class="input-button" value="Login">
+                            </form>
+                            <div class="help-action">
+                                <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a class="forgot" href="#">Forgot
+                                        your password?</a></p>
+                            </div>
+                            <div>
+                                <div class="login-button-box">
+                                    <div class="login-button-box-inner">
+                                        <a href="/oauth2/authorization/naver" class="oauth2-a"><img
+                                                src="/static/images/button/naver_login_button.png" alt="네이버 로그인 버튼"
+                                                class="login-button-css"></a>
+                                    </div>
+                                    <div class="login-button-box-inner">
+                                        <a href="/oauth2/authorization/kakao" class="oauth2-a"><img
+                                                src="/static/images/button/kakao_login_button.png" alt="카카오 로그인 버튼"
+                                                class="login-button-css"></a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- TABS CONTENT SIGNUP -->
+                        <div id="signup-tab-content">
+                            <form class="signup-form" method="post">
+                                    <input type="text" class="input" id="reg_username" autocomplete="off"
+                                        placeholder="Username">
+                                    <input type="password" class="input" id="reg_password" autocomplete="off"
+                                        placeholder="Password">
+                                    <input type="email" class="input" id="reg_email" autocomplete="off"
+                                        placeholder="Email">
+                                    <input type="text" class="input" id="reg_nickname" autocomplete="off"
+                                        placeholder="nickname">
+                                    <input type="submit" class="regBtn input-button" value="Sign Up">
+                                </form>
+                            <div class="error-message-box">
+                                <div id="login-error" class="error-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="toast-container" class="toast-container"></div>
+</body>
+<script src="/static/js/principal/principal.js"></script>
+<script src="/static/js/header/header.js"></script>
+<script src="/static/js/account/login.js"></script>
+<script src="/static/js/account/register.js"></script>
+
+</html>

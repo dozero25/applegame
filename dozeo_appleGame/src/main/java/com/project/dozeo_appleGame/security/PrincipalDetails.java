@@ -1,5 +1,7 @@
 package com.project.dozeo_appleGame.security;
 
+import com.project.dozeo_appleGame.entity.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,16 +11,25 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class PrincipalDetails implements UserDetails{
 
-
+    @Getter
+    private final User user;
 
     @Override
     public String getPassword() {
-        return null;
+        String pw = "";
+        if(user != null){
+            pw = user.getPassword();
+        }
+        return pw;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        String username = "";
+        if(user != null){
+            username = user.getUsername();
+        }
+        return username;
     }
 
     @Override

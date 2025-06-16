@@ -1,4 +1,4 @@
-package com.project.dozeo_appleGame.entity.score;
+package com.project.dozeo_appleGame.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

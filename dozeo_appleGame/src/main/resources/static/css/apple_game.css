@@ -40,7 +40,7 @@
 }
 
 .cell {
-    background-image: url('/static/images/apple-icons.png');
+    background-image: url('/static/images/icons/apple-icons.png');
     background-position: center;
 
     display: flex;

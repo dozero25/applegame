@@ -272,21 +272,29 @@ class ComponentEvent {
     clickBtn() {
         const compEvent = ComponentEvent.getInstance();
 
-        document.getElementById('undoBtn').addEventListener('click', () => {
+        document.getElementById('undoBtn_1').addEventListener('click', () => {
             compEvent.goHome();
         });
 
-        document.getElementById('restartBtn').addEventListener('click', () => {
+        document.getElementById('restartBtn_1').addEventListener('click', () => {
+            compEvent.resetGame();
+        });
+
+        document.getElementById('undoBtn_2').addEventListener('click', () => {
+            compEvent.goHome();
+        });
+
+        document.getElementById('restartBtn_2').addEventListener('click', () => {
             compEvent.resetGame();
         });
     }
 
     goHome() {
-        window.location.href = "/main";
+        window.location.href = "/apple";
     }
 
     resetGame() {
-        window.location.href = "/game";
+        window.location.href = "/apple/game";
     }
 
     startTimer() {
@@ -321,8 +329,4 @@ class ComponentEvent {
         }, 50);
 
     }
-
-
-
-
 }

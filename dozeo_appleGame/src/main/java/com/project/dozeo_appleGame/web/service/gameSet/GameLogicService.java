@@ -23,7 +23,7 @@ public class GameLogicService {
 
         // 1. 시작 위치에 숫자 배치 시도. 시작 위치 : (0, 0) 고정
         if(!boardService.placeNumber(startR, startC, startNum)){
-            System.out.println("배치 실패 (이미 숫자 있음 또는 위치 불가): " + startR + ", " + startC);
+//            System.out.println("배치 실패 (이미 숫자 있음 또는 위치 불가): " + startR + ", " + startC);
             return;
         }
 
@@ -43,7 +43,7 @@ public class GameLogicService {
             // 5. 현재 위치 주변의 빈 칸 탐색(인접 노드 조회)
             List<int[]> adjEmptyCells = boardService.getAdjacentEmptyCells(r, c);
             if(adjEmptyCells.isEmpty()){
-                System.out.println("인접 빈칸 없음 at (" + r + "," + c + ")");
+//                System.out.println("인접 빈칸 없음 at (" + r + "," + c + ")");
                 continue;
             }
 
@@ -56,7 +56,7 @@ public class GameLogicService {
                 int randomNum = random.nextInt(9)+ 1;
 
                 if(boardService.placeNumber(pos[0], pos[1], randomNum)){
-                    System.out.println("랜덤 숫자 " + randomNum + " 배치됨 at (" + pos[0] + "," + pos[1] + ")");
+//                    System.out.println("랜덤 숫자 " + randomNum + " 배치됨 at (" + pos[0] + "," + pos[1] + ")");
                     // 7. 숫자 배치에 성공하면 그 위치를 큐에 넣어 다음 탐색 대상으로 만듦 (탐색 영역 확장)
                     queue.offer(new int[]{pos[0], pos[1]});
                 }
@@ -70,7 +70,7 @@ public class GameLogicService {
                     int randomNum = random.nextInt(9) + 1;
 
                     if(boardService.placeNumber(pos[0], pos[1], randomNum)){
-                        System.out.println("랜덤 숫자 " + randomNum + " 배치됨 at (" + pos[0] + "," + pos[1] + ")");
+//                        System.out.println("랜덤 숫자 " + randomNum + " 배치됨 at (" + pos[0] + "," + pos[1] + ")");
                         queue.offer(new int[]{pos[0], pos[1]});
                     }
                     continue;
@@ -86,7 +86,7 @@ public class GameLogicService {
                     int n = selectCombo.get(i);
 
                     if(boardService.placeNumber(pos[0], pos[1], n)){
-                        System.out.println("조합 숫자 " + n + " 배치됨 at (" + pos[0] + "," + pos[1] + ")");
+//                        System.out.println("조합 숫자 " + n + " 배치됨 at (" + pos[0] + "," + pos[1] + ")");
                         // 7. 배치 성공한 위치를 큐에 넣어 BFS 탐색 계속
                         queue.offer(new int[]{pos[0], pos[1]});
                     }

@@ -1,0 +1,38 @@
+.main-container {
+    background: rgba(255, 249, 248, 0.9);
+    padding: 40px 60px;
+    border-radius: 25px;
+    box-shadow: 0 8px 20px rgba(214, 40, 40, 0.3);
+    text-align: center;
+    max-width: 440px;
+    box-sizing: border-box;
+}
+
+.main-container h1 {
+    color: #d62828;
+    font-weight: normal;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    user-select: none;
+}
+
+.main-container p {
+    color: #6e3b3b;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.main-container button {
+    background-color: #d62828;
+    color: white;
+    font-size: 20px;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.main-container button:hover {
+    background-color: #a61c1c;
+}

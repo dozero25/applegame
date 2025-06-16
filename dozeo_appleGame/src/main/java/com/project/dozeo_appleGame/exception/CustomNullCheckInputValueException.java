@@ -7,6 +7,6 @@ import java.util.Map;
 
 @AllArgsConstructor
 @Getter
-public class CustomInputException extends RuntimeException{
+public class CustomNullCheckInputValueException extends NullPointerException{
     private Map<String, String> errorMap;
 }
