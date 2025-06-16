@@ -10,11 +10,9 @@
  
  - 목적 : 다양한 방식으로 코드를 구성하는 연습과 구조적 설계 학습
  - 게임 방식 : 제한 시간 내에 사과들을 드래그하여 합이 10이 되도록 맞추는 간단한 미니 게임
- - 기술 스택 : Java, Spring Boot, HTML/CSS/JS, Swagger, Spring Security, JPA
- - 현재 상태 : 게임 플레이 로직 구현 완료 (DB 미사용, 기능 확장 예정)
+ - 기술 스택 : Java, Spring Boot, HTML/CSS/JS, Swagger, Spring Security, JPA, QueryDSL
+ - 현재 상태 : 게임 플레이 로직 구현 완료, 회원가입 및 로그인, 소셜 로그인(카카오, 네이버), QueryDSL 활용 데이터 처리
  - 앞으로 추가할 기능 :  
-   - 로그인 (게스트 + OAuth2)  
-   - 관리자 기능 (게임 난이도 조절)  
    - 랭킹 시스템 (점수/등수/닉네임 기록)  
    - AWS 배포 예정
 
@@ -40,19 +38,23 @@
 - 게임 UI 및 플레이 로직 구현 (HTML/CSS/JavaScript)
 - 드래그 이벤트 처리 및 합산 로직
 - 점수 계산 및 제한 시간 설정
+- 로그인 및 소셜 로그인 기능 구현
+- JPA를 활용한 회원가입 기능 구현  
+- QueryDSL을 활용한 효율적인 데이터 쿼리 처리  
 
 </br>
 
 ### 기술 스택
-|구분|기술|
-|:----:|:----|
-|Language	| Java, JavaScript |
-|Frontend	| HTML, CSS, JavaScript|
-|Backend	| Spring Boot (Spring Data JPA 사용 예정)|
-|Docs	| Swagger |
-|ORM	| Spring Data JPA (예정)|
-|DB |	MySQL (예정)|
-|배포 |	AWS EC2 or S3 (예정)|
+| 구분       | 기술                         |
+|:---------:|:---------------------------|
+| Language  | Java, JavaScript            |
+| Frontend  | HTML, CSS, JavaScript       |
+| Backend   | Spring Boot                 |
+| Docs      | Swagger                     |
+| ORM       | Spring Data JPA, QueryDSL   |
+| DB        | MySQL                      |
+| 인증      | OAuth2 (Naver, Kakao)       |
+| 배포      | AWS EC2 or S3 (예정)        |
 
 
 </br>
@@ -113,6 +115,14 @@
 
 ### 실제 플레이 영상
 ![palygame](https://github.com/user-attachments/assets/28d544de-25a8-4966-b49b-961554abd0d4)
+
+</br>
+
+### 통합 메인 화면  
+
+![통합 MAIN UI](https://github.com/user-attachments/assets/34fddf3d-2545-4ded-b979-990e0cf5bed5)
+
+**통합 main UI를 새로 추가했습니다. 앞으로 웹에서 즐길 수 있는 게임을 점차 확장하며 계속해서 기능을 추가할 예정입니다.**
 
 </br>
 
