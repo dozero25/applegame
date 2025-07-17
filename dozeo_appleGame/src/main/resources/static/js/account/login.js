@@ -1,10 +1,57 @@
 window.onload = () => {
     HeaderService.getInstance().loadHeader();
     RegisterService.getInstance().saveUserInfo();
+    RegisterService.getInstance().ClickEventForGuestLogin();
+    LoginService.getInstance().loginForm();
     const compEvent = ComponentEvent.getInstance();
     compEvent.reactLoginAndRegister();
 }
 
+
+class LoginService {
+    static #instance = null;
+
+    static getInstance() {
+        if (this.#instance == null) {
+            this.#instance = new LoginService();
+        }
+        return this.#instance;
+    }
+
+    loginForm() {
+        document.getElementById("login-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch("/api/account/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                if (!response.ok) {
+                    console.error("로그인 실패");
+                    return;
+                }
+
+                const resJson = await response.json();
+                const token = resJson.data?.token || resJson.token;
+
+                if (token) {
+                    localStorage.setItem("token", token);
+                    window.location.href = "/main";
+                } else {
+                    console.error("토큰이 없습니다.");
+                }
+            } catch (error) {
+                console.error("로그인 중 오류 발생:", error);
+            }
+        });
+    }
+}
 
 class ComponentEvent {
     static #instance = null;

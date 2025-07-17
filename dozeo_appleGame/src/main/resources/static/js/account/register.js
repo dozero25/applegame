@@ -39,7 +39,27 @@ class RegisterApi {
             return error;
         }
     }
+
+    async guestLoginForRegister() {
+        try {
+            const response = await fetch(`http://localhost:8000/api/account/guest/signup`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const data = await response.json();
+
+            return data;
+        } catch (error) {
+            console.error("Guest Login Error", error);
+            return error;
+        }
+    }
 }
+
+
 
 class RegisterService {
     static #instance = null;
@@ -92,5 +112,27 @@ class RegisterService {
         setTimeout(() => {
             toast.remove();
         }, 3000);
+    }
+
+    ClickEventForGuestLogin(){
+        const guestLoginBtn = document.querySelector(".guest-input-button");
+
+        guestLoginBtn.addEventListener("click", async () => {
+
+            try {
+                const result = await RegisterApi.getInstance().guestLoginForRegister();      
+
+                if(result.data && result.data.token){
+                    localStorage.setItem("token", result.data.token);
+                    localStorage.setItem("username", result.data.username);
+
+                    window.location.href = "/main";
+                } else {
+                    console.error("게스트 로그인 실패", data);
+                }
+            } catch (error) {
+                console.error("게스트 로그인 중 에러발생", error);
+            }  
+        });
     }
 }

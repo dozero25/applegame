@@ -790,7 +790,6 @@ input {
 .login-button-box {
     display: flex;
     justify-content: center;
-    align-items: center;
     margin-top: 10px;
 }
 
@@ -799,8 +798,8 @@ input {
 }
 
 .login-button-css {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
 }
 
 .oauth2-a {
@@ -834,4 +833,12 @@ input {
   0%   { opacity: 0.95; }
   80%  { opacity: 0.95; }
   100% { opacity: 0; transform: translateY(-20px); }
+}
+
+.guest-input-button{
+    border: 1px white;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
 }

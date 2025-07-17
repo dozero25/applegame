@@ -5,7 +5,7 @@ import com.project.dozeo_appleGame.exception.CustomInputSameIdException;
 import com.project.dozeo_appleGame.exception.CustomInputSameNicknameException;
 import com.project.dozeo_appleGame.exception.CustomNullCheckInputValueException;
 import com.project.dozeo_appleGame.repository.account.AccountRepository;
-import com.project.dozeo_appleGame.security.PrincipalDetails;
+import com.project.dozeo_appleGame.security.custom.CustomUserDetails;
 import com.project.dozeo_appleGame.web.dto.UserSignupRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,9 +13,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +23,7 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final RandomNicknameService randomNicknameService;
 
-    public User signup(UserSignupRequestDto dto){
+    public User signUp(UserSignupRequestDto dto){
         nullCheckInputValue(dto);
         sameIdCheck(dto.getUsername());
         sameNicknameCheck(dto.getNickname());
@@ -35,6 +33,22 @@ public class AccountService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
+                .isGuest(false)
+                .registerDate(LocalDateTime.now())
+                .build();
+
+        return accountRepository.save(user);
+    }
+    public User guestReg(){
+        String uuid = UUID.randomUUID().toString();
+        String guestId = "guest" + uuid.substring(0, 8);
+
+        User user = User.builder()
+                .username(guestId)
+                .password("")
+                .email(guestId+"@")
+                .nickname(guestId)
+                .isGuest(true)
                 .registerDate(LocalDateTime.now())
                 .build();
 
@@ -80,19 +94,19 @@ public class AccountService {
         if(principal == null || "anonymousUser".equals(principal)){
             return null;
         }
-        if(principal instanceof PrincipalDetails principalDetails){
-            return extraLocalUserInfo(principalDetails);
+        if(principal instanceof CustomUserDetails customUserDetails){
+            return extraLocalUserInfo(customUserDetails);
         } else if(principal instanceof OAuth2User oAuth2User){
             return extraOAuth2Info(oAuth2User);
         }
-
         return null;
     }
 
     // 일반 사용자 데이터 추가
-    private Map<String, Object> extraLocalUserInfo(PrincipalDetails principalDetails){
+    private Map<String, Object> extraLocalUserInfo(CustomUserDetails customUserDetails){
         Map<String, Object> responseData = new HashMap<>();
-        String username = principalDetails.getUsername();
+        String username = customUserDetails.getUsername();
+
         responseData.put("type", "local");
         responseData.put("userIndex", accountRepository.findUserIdByUsername(username));
         responseData.put("username", username);
@@ -155,7 +169,6 @@ public class AccountService {
         userInfo.put("nickname", nickname);
         return userInfo;
     }
-
 
     // Oauth2 사용자 db 등록
     private Map<String, Object> registerUserInfoByOauth2(String email) {

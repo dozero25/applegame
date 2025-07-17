@@ -174,7 +174,7 @@ class ComponentEvent {
     // 마우스 클릭 해제 시 실행
     onMouseUp() {
         if (!this.dragBox) return;
-
+        const completeSound = new Audio('/static/sound/Blop%20Sound.mp3');
         const selectedCells = this.gameBoard.querySelectorAll('.cell.apple.selected');
 
         let totalScore = 0;
@@ -195,6 +195,10 @@ class ComponentEvent {
             });
             this.score += selectedCells.length; // 점수 증가
             this.updateScore();; // 점수 반영
+
+            completeSound.currentTime = 0;
+            completeSound.play();
+
         } else {
             // 선택 해제 및 테두리 제거
             selectedCells.forEach(cell => {

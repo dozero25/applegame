@@ -15,12 +15,24 @@
     <div class="main-container">
         <h1>🍎 사과 게임 🍎</h1>
         <p>숫자를 조합하며 사과를 퍼뜨려 보세요!</p>
-        <button onclick="startGame()">게임 시작</button>
+        
+        <div>
+            <button onclick="goHome()">Home</button>
+        </div>
+
+        <div style="margin-top: 20px;">
+            
+            <button onclick="startGame()">게임 시작</button>
+        </div>
     </div>
 
     <script>
         function startGame() {
             window.location.href = "/apple/game";
+        }
+
+        function goHome() {
+            window.location.href = "/main"
         }
     </script>
 </body>

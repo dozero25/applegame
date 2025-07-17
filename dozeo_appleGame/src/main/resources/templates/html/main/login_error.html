@@ -63,6 +63,10 @@
                                         your password?</a></p>
                             </div>
                             <div>
+                                <div class="login-button-box-inner">
+                                    <button id="guestLoginBtn" class="guest-input-button login-button-css"
+                                        title="게스트 로그인">👤</button>
+                                </div>
                                 <div class="login-button-box">
                                     <div class="login-button-box-inner">
                                         <a href="/oauth2/authorization/naver" class="oauth2-a"><img
@@ -81,16 +85,15 @@
                         <!-- TABS CONTENT SIGNUP -->
                         <div id="signup-tab-content">
                             <form class="signup-form" method="post">
-                                    <input type="text" class="input" id="reg_username" autocomplete="off"
-                                        placeholder="Username">
-                                    <input type="password" class="input" id="reg_password" autocomplete="off"
-                                        placeholder="Password">
-                                    <input type="email" class="input" id="reg_email" autocomplete="off"
-                                        placeholder="Email">
-                                    <input type="text" class="input" id="reg_nickname" autocomplete="off"
-                                        placeholder="nickname">
-                                    <input type="submit" class="regBtn input-button" value="Sign Up">
-                                </form>
+                                <input type="text" class="input" id="reg_username" autocomplete="off"
+                                    placeholder="Username">
+                                <input type="password" class="input" id="reg_password" autocomplete="off"
+                                    placeholder="Password">
+                                <input type="email" class="input" id="reg_email" autocomplete="off" placeholder="Email">
+                                <input type="text" class="input" id="reg_nickname" autocomplete="off"
+                                    placeholder="nickname">
+                                <input type="submit" class="regBtn input-button" value="Sign Up">
+                            </form>
                             <div class="error-message-box">
                                 <div id="login-error" class="error-message"></div>
                             </div>
@@ -100,7 +103,7 @@
             </div>
         </div>
     </div>
-<div id="toast-container" class="toast-container"></div>
+    <div id="toast-container" class="toast-container"></div>
 </body>
 <script src="/static/js/principal/principal.js"></script>
 <script src="/static/js/header/header.js"></script>

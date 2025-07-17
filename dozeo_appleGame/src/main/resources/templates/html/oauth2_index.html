@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>OAuth2 Redirect</title>
+</head>
+<body>
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("token");
+
+      if (token) {
+        localStorage.setItem("token", token);
+        window.location.href = "/main";
+      } else {
+        window.location.href = "/login";
+      }
+    })();
+  </script>
+</body>
+</html>

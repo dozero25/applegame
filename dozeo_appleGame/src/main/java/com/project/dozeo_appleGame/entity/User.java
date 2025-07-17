@@ -1,17 +1,15 @@
 package com.project.dozeo_appleGame.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Data
 @Entity
 @Table(name = "user")
 public class User {
@@ -32,6 +30,9 @@ public class User {
 
     @Column(name = "nickname", nullable = false)
     private String nickname;
+
+    @Column(name = "is_guest", nullable = false)
+    private boolean isGuest;
 
     @Column(name = "register_date", nullable = false)
     private LocalDateTime registerDate;
