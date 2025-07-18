@@ -1,0 +1,85 @@
+    body{
+        background-color: #eeeeee;
+    }
+    
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin-top: 50px;
+    }
+    .mypage-container {
+        background-color: #c6c6c6;
+        width: 100%;
+        max-width: 500px;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .mypage-container h2 {
+        margin-bottom: 24px;
+        text-align: center;
+        font-size: 1.6rem;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6px;
+        color: #444;
+    }
+
+    .form-group input {
+        width: 96%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .btn-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-update {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-update:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-social-unlink {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-social-unlink:hover {
+        background-color: #b02a37;
+    }
+
+    @media (max-width: 500px) {
+        .mypage-container {
+            padding: 20px;
+        }
+    }
