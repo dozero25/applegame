@@ -4,9 +4,11 @@ import com.project.dozeo_appleGame.entity.User;
 import com.project.dozeo_appleGame.exception.CustomInputSameIdException;
 import com.project.dozeo_appleGame.exception.CustomInputSameNicknameException;
 import com.project.dozeo_appleGame.exception.CustomNullCheckInputValueException;
-import com.project.dozeo_appleGame.repository.account.AccountRepository;
+import com.project.dozeo_appleGame.repository.account.UserRepository;
 import com.project.dozeo_appleGame.security.custom.CustomUserDetails;
 import com.project.dozeo_appleGame.web.dto.UserSignupRequestDto;
+import com.project.dozeo_appleGame.web.dto.UserUpdateRequestDto;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -17,9 +19,9 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class AccountService {
+public class UserService {
 
-    private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RandomNicknameService randomNicknameService;
 
@@ -37,7 +39,7 @@ public class AccountService {
                 .registerDate(LocalDateTime.now())
                 .build();
 
-        return accountRepository.save(user);
+        return userRepository.save(user);
     }
     public User guestReg(){
         String uuid = UUID.randomUUID().toString();
@@ -52,12 +54,12 @@ public class AccountService {
                 .registerDate(LocalDateTime.now())
                 .build();
 
-        return accountRepository.save(user);
+        return userRepository.save(user);
     }
 
     public void sameIdCheck(String username){
         Map<String, String > errorMap = new HashMap<>();
-        if(accountRepository.existsByUsername(username)){
+        if(userRepository.existsByUsername(username)){
             errorMap.put("registerError", "ID를 확인해주세요");
             throw new CustomInputSameIdException(errorMap);
         }
@@ -65,7 +67,7 @@ public class AccountService {
 
     public void sameNicknameCheck(String nickname){
         Map<String, String> errorMap = new HashMap<>();
-        if(accountRepository.existsByNickname(nickname)){
+        if(userRepository.existsByNickname(nickname)){
             errorMap.put("registerError", "중복된 닉네임입니다.");
             throw new CustomInputSameNicknameException(errorMap);
         }
@@ -108,9 +110,10 @@ public class AccountService {
         String username = customUserDetails.getUsername();
 
         responseData.put("type", "local");
-        responseData.put("userIndex", accountRepository.findUserIdByUsername(username));
+        responseData.put("userIndex", userRepository.findUserIdByUsername(username));
         responseData.put("username", username);
-        responseData.put("nickname", accountRepository.findNicknameByUsername(username));
+        responseData.put("nickname", userRepository.findNicknameByUsername(username));
+        responseData.put("email", userRepository.findEmailByUsername(username));
 
         return responseData;
     }
@@ -172,8 +175,8 @@ public class AccountService {
 
     // Oauth2 사용자 db 등록
     private Map<String, Object> registerUserInfoByOauth2(String email) {
-        if (accountRepository.existsByEmail(email)) {
-            User user = accountRepository.findByEmail(email);
+        if (userRepository.existsByEmail(email)) {
+            User user = userRepository.findByEmail(email);
             return Map.of(
                     "username", user.getUsername(),
                     "nickname", user.getNickname(),
@@ -185,13 +188,13 @@ public class AccountService {
         String randomPassword = UUID.randomUUID().toString();
 
         User user = new User();
-        user.setUsername("OAuth2_User" + accountRepository.findNextUserIndex());
+        user.setUsername("OAuth2_User" + userRepository.findNextUserIndex());
         user.setPassword(passwordEncoder.encode(randomPassword));
         user.setEmail(email);
         user.setNickname(nickname);
         user.setRegisterDate(LocalDateTime.now());
 
-        accountRepository.save(user);
+        userRepository.save(user);
 
         return Map.of(
                 "username", user.getUsername(),
@@ -199,5 +202,15 @@ public class AccountService {
                 "email", user.getEmail(),
                 "userIndex", user.getId()
         );
+    }
+
+    @Transactional
+    public void updateUserInfo(Long id, UserUpdateRequestDto dto){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저는 없습니다."));
+
+        user.setUsername(dto.getUsername());
+        user.setNickname(dto.getNickname());
+        user.setEmail(dto.getEmail());
     }
 }

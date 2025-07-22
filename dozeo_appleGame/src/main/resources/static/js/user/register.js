@@ -17,13 +17,13 @@ class RegisterApi {
 
     async registerUserInfo(userData) {
         try {
-            const response = await fetch(`http://localhost:8000/api/account/signup`, {
+            const response = await fetch(`http://localhost:8000/api/user/signup`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify(userData)
             });
 
-            const data = await response.json().catch(() => null);
+            const data = await response.json();
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -42,7 +42,7 @@ class RegisterApi {
 
     async guestLoginForRegister() {
         try {
-            const response = await fetch(`http://localhost:8000/api/account/guest/signup`, {
+            const response = await fetch(`http://localhost:8000/api/user/guest/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

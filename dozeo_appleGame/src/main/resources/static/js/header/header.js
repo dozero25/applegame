@@ -31,11 +31,11 @@ class HeaderService {
                 <div class="header-logo"><a href="/main">DozeroGameHub</a></div>
                 <div class="auth-buttons">
                     ${this.principal == null
-                        ? `<a href="/login"><button id="loginBtn">로그인</button></a>`
+                        ? `<a href="/login"><button class="loginBtn" id="loginBtn">로그인</button></a>`
                         : `
-                            <span>${this.principal.nickname}님</span>
-                            <a href="/mypage"><button id="mypageBtn">마이페이지</button></a>
-                            <button id="logoutBtn">로그아웃</button>
+                            <span class="nick-name">${this.principal.nickname}님</span>
+                            <a href="/mypage"><button class="mypageBtn" id="mypageBtn">마이페이지</button></a>
+                            <button class="logoutBtn" id="logoutBtn">로그아웃</button>
                         `}
                 </div>
             `;

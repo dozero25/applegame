@@ -40,4 +40,8 @@ public class MainController {
         return "html/oauth2_index";
     }
 
+    @GetMapping("/mypage")
+    public String myPage(){
+        return "html/mypage/mypage.html";
+    }
 }

@@ -1,7 +1,7 @@
 package com.project.dozeo_appleGame.security;
 
 import com.project.dozeo_appleGame.entity.User;
-import com.project.dozeo_appleGame.repository.account.AccountRepository;
+import com.project.dozeo_appleGame.repository.account.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PrincipalDetailsService implements UserDetailsService {
 
-    private final AccountRepository accountRepository;
+    private final UserRepository accountRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

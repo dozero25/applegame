@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AccountRepository extends JpaRepository<User, Long>, AccountRepositoryCustom {
+public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
     Optional<User> findByUsername(String username);
+    Optional<User> findById(int id);
     boolean existsByUsername(String username);
     boolean existsByNickname(String nickname);
 
@@ -22,6 +23,9 @@ public interface AccountRepository extends JpaRepository<User, Long>, AccountRep
 
     @Query("SELECT u.nickname FROM User u WHERE u.username = :username")
     String findNicknameByUsername(String username);
+
+    @Query("SELECT u.email FROM User u WHERE u.username = :username")
+    String findEmailByUsername(String username);
 
     User findByEmail(String email);
 

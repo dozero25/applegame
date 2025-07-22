@@ -1,7 +1,7 @@
 package com.project.dozeo_appleGame.security.custom;
 
 import com.project.dozeo_appleGame.security.jwt.JwtUtil;
-import com.project.dozeo_appleGame.web.service.account.AccountService;
+import com.project.dozeo_appleGame.web.service.account.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtUtil jwtUtil;
-    private final AccountService accountService;
+    private final UserService accountService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,

@@ -1,12 +1,10 @@
 package com.project.dozeo_appleGame.web.api;
 
 import com.project.dozeo_appleGame.entity.User;
+import com.project.dozeo_appleGame.security.custom.CustomUserDetails;
 import com.project.dozeo_appleGame.security.jwt.JwtUtil;
-import com.project.dozeo_appleGame.web.dto.CMRespDTO;
-import com.project.dozeo_appleGame.web.dto.JwtResponse;
-import com.project.dozeo_appleGame.web.dto.LoginRequestDto;
-import com.project.dozeo_appleGame.web.dto.UserSignupRequestDto;
-import com.project.dozeo_appleGame.web.service.account.AccountService;
+import com.project.dozeo_appleGame.web.dto.*;
+import com.project.dozeo_appleGame.web.service.account.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +22,10 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/account")
-public class AccountApi {
+@RequestMapping("/api/user")
+public class UserApi {
 
-    private final AccountService accountService;
+    private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
@@ -52,14 +50,14 @@ public class AccountApi {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserSignupRequestDto dto){
-        accountService.signUp(dto);
+        userService.signUp(dto);
         return ResponseEntity.ok()
                 .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", true));
     }
 
     @PostMapping("/guest/signup")
     public ResponseEntity<?> guestSignup(){
-        User guestUser = accountService.guestReg();
+        User guestUser = userService.guestReg();
 
         String token = jwtUtil.createToken(guestUser.getUsername(), guestUser.getNickname());
 
@@ -85,8 +83,7 @@ public class AccountApi {
 
     @GetMapping("/principal")
     public ResponseEntity<?> principal(@AuthenticationPrincipal Object principal){
-        System.out.println("principal : "+principal);
-        Map<String, Object> userInfo = accountService.separateUserOfLoginType(principal);
+        Map<String, Object> userInfo = userService.separateUserOfLoginType(principal);
 
         if(userInfo == null){
             return ResponseEntity.badRequest()
@@ -94,6 +91,15 @@ public class AccountApi {
         }
         return ResponseEntity.ok()
                 .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully data", userInfo));
+    }
+
+    @PutMapping("/info/update")
+    public ResponseEntity<?> userUpdate(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody UserUpdateRequestDto dto){
+        Long id = userDetails.getUser().getId();
+        userService.updateUserInfo(id, dto);
+
+        return ResponseEntity.ok()
+                .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", null));
     }
 
 }

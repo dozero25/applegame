@@ -1,6 +1,6 @@
 package com.project.dozeo_appleGame.web.service.account;
 
-import com.project.dozeo_appleGame.repository.account.AccountRepository;
+import com.project.dozeo_appleGame.repository.account.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class RandomNicknameService {
 
-    private final AccountRepository accountRepository;
+    private final UserRepository accountRepository;
 
     private static final String[] adjectives = {
             "귀여운", "용감한", "조용한", "빠른", "멋진", "씩씩한", "엉뚱한", "깜찍한",

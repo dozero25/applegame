@@ -10,18 +10,16 @@ class PrincipalApi {
     async getPrincipal() {
         const token = localStorage.getItem("token");
 
-        console.log("token : " + token);
-
         if (!token) {
             console.warn("토큰이 없습니다. 로그인하세요.");
             return null;
         }
 
         try {
-            const response = await fetch("/api/account/principal", {
+            const response = await fetch("/api/user/principal", {
                 method: "GET",
                 headers: {
-                    "Authorization": `Bearer ${token}`,
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     "Content-Type": "application/json"
                 },
             });
@@ -42,8 +40,7 @@ class PrincipalApi {
     handleOAuthRedirect() {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get("token");
-
-        console.log("urlToken : " + token);
+        
         if (token) {
             localStorage.setItem("token", token);
             history.replaceState({}, document.title, window.location.pathname);

@@ -6,10 +6,11 @@ import com.project.dozeo_appleGame.security.custom.CustomOAuth2UserService;
 import com.project.dozeo_appleGame.security.custom.CustomUserDetailsService;
 import com.project.dozeo_appleGame.security.jwt.JwtAuthenticationFilter;
 import com.project.dozeo_appleGame.security.jwt.JwtUtil;
-import com.project.dozeo_appleGame.web.service.account.AccountService;
+import com.project.dozeo_appleGame.web.service.account.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,7 +29,7 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final AccountService accountService;
+    private final UserService accountService;
 
 
     @Bean
@@ -71,10 +72,12 @@ public class SecurityConfig {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/static/css/**", "/static/js/**", "/static/images/**").permitAll()
                         .requestMatchers("/.well-known/**").permitAll()
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/user/update").authenticated()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

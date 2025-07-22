@@ -5,12 +5,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
+public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
     private final QUser qUser = QUser.user;
 
-    public AccountRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
+    public UserRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 

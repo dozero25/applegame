@@ -21,6 +21,15 @@
   align-items: center;
 }
 
-#loginBtn, #logoutBtn, #mypageBtn {
+.auth-buttons button {
+  margin-left: 10px;
+  padding: 0.5rem 1rem;
+}
+
+.loginBtn, .logoutBtn, .mypageBtn {
   padding: 10px 15px;
+}
+
+.nick-name{
+  margin-right: 10px;
 }

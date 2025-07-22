@@ -22,11 +22,13 @@ class LoginService {
         document.getElementById("login-form").addEventListener("submit", async (e) => {
             e.preventDefault();
 
+            console.log("token");
+
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
             try {
-                const response = await fetch("/api/account/login", {
+                const response = await fetch("/api/user/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username, password }),
@@ -64,7 +66,6 @@ class ComponentEvent {
     }
 
     reactLoginAndRegister() {
-        // 탭 클릭 이벤트
         document.querySelectorAll('.tabs h3 a').forEach(tab => {
             tab.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -77,7 +78,6 @@ class ComponentEvent {
             });
         });
 
-        // 슬라이드쇼
         const slideshow = document.getElementById('slideshow');
         if (slideshow) {
             const slides = slideshow.children;
@@ -94,14 +94,12 @@ class ComponentEvent {
             }, 3850);
         }
 
-        // 클래스 스왑 함수
         function swapClass(el, removeClass, addClass) {
             if (!el) return; // 요소가 없으면 그냥 종료
             el.classList.remove(removeClass);
             el.classList.add(addClass);
         }
 
-        // 패널 show/hide
         document.querySelectorAll('.agree, .forgot, #toggle-terms, .log-in, .sign-up').forEach(trigger => {
             trigger.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -144,7 +142,6 @@ class ComponentEvent {
             });
         });
 
-        // 메시지 표시
         const recoveryButton = document.querySelector('.recovery .button');
         if (recoveryButton) {
             recoveryButton.addEventListener('click', function (event) {
