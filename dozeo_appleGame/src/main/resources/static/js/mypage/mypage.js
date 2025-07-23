@@ -37,7 +37,7 @@ class MypageApi {
                 const errorMessage = (data && data.message) || "Update failed";
                 throw new Error(errorMessage);
             } else {
-                const data = await PrincipalApi.getInstance().getPrincipal();
+                await PrincipalApi.getInstance().getPrincipal();
                 HeaderService.getInstance().principal = null;
                 await HeaderService.getInstance().loadHeader();
             }
@@ -66,34 +66,64 @@ class MypageService {
         const myPage = document.querySelector(".mypage-container");
         const data = await PrincipalApi.getInstance().getPrincipal();
 
-        console.log(data.type);
+        const userType = this.getUserType(data.type);
+        const html = this.renderUserInfoForm(data, userType);
 
-        myPage.innerHTML = `
+        myPage.innerHTML = html;
+        this.updateMyPageInfo();
+    }
+
+    getUserType(type) {
+        return {
+            isGuest: type === "guest",
+            isOAuth: type === "oauth2",
+            isGeneral: type === "local",
+        };
+    }
+
+    renderUserInfoForm(data, { isGuest, isOAuth, isGeneral }) {
+        const isInfoEditable = isGeneral;
+        const showPasswordButton = isGeneral;
+        const showSocialUnlinkButton = isOAuth;
+
+        return `
             <div id="userUpdateForm">
+            ${isOAuth !== true ? `
                 <div class="form-group">
                     <label for="username">아이디</label>
-                    <input type="text" id="username" name="username" autocomplete="off" placeholder="아이디 입력" value="${data.username}" disabled>
+                    <input type="text" id="username" name="username" autocomplete="off" value="${data.username}" disabled>
                 </div>
+                ` : ''}
                 <div class="form-group">
                     <label for="nickname">닉네임</label>
-                    <input type="text" id="nickname" name="nickname" autocomplete="off" placeholder="닉네임 입력" value="${data.nickname}" disabled>
+                    <input type="text" id="nickname" name="nickname" autocomplete="off" disabled value="${data.nickname}" ${isInfoEditable ? "" : "disabled"}>
                 </div>
-
                 <div class="form-group">
                     <label for="email">이메일</label>
-                    <input type="email" id="email" name="email" autocomplete="off" placeholder="이메일 입력" value="${data.email}" disabled>
+                    <input type="email" id="email" name="email" autocomplete="off" disabled value="${data.email}" ${isInfoEditable ? "" : "disabled"}>
                 </div>
 
                 <div class="btn-container">
-                    <button type="button" class="btn btn-update">정보 수정</button>
-                    <button type="button" class="btn btn-update-password">비밀번호 변경</button>
-                    <button type="button" class="btn btn-social-unlink">소셜 연동 해제</button>
+                    ${isInfoEditable ? this.renderUpdateButton() : ""}
+                    ${showPasswordButton ? this.renderPasswordButton() : ""}
+                    ${showSocialUnlinkButton ? this.renderSocialUnlinkButton() : ""}
                 </div>
             </div>
         `;
-
-        this.updateMyPageInfo();
     }
+
+    renderUpdateButton() {
+        return `<button type="button" class="btn btn-update">정보 수정</button>`;
+    }
+
+    renderPasswordButton() {
+        return `<button type="button" class="btn btn-update-password">비밀번호 변경</button>`;
+    }
+
+    renderSocialUnlinkButton() {
+        return `<button type="button" class="btn btn-social-unlink">소셜 연동 해제</button>`;
+    }
+
 
     async updateMyPageInfo() {
         const formGroups = document.querySelectorAll(".form-group");

@@ -109,7 +109,12 @@ public class UserService {
         Map<String, Object> responseData = new HashMap<>();
         String username = customUserDetails.getUsername();
 
-        responseData.put("type", "local");
+        if(!customUserDetails.getUser().isGuest()){
+            responseData.put("type", "local");
+        } else {
+            responseData.put("type", "guest");
+        }
+
         responseData.put("userIndex", userRepository.findUserIdByUsername(username));
         responseData.put("username", username);
         responseData.put("nickname", userRepository.findNicknameByUsername(username));
