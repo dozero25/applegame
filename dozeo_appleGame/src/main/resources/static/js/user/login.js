@@ -22,8 +22,6 @@ class LoginService {
         document.getElementById("login-form").addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            console.log("token");
-
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
@@ -53,6 +51,8 @@ class LoginService {
             }
         });
     }
+
+    
 }
 
 class ComponentEvent {

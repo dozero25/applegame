@@ -4,6 +4,7 @@ import com.project.dozeo_appleGame.entity.User;
 import com.project.dozeo_appleGame.security.custom.CustomUserDetails;
 import com.project.dozeo_appleGame.security.jwt.JwtUtil;
 import com.project.dozeo_appleGame.web.dto.*;
+import com.project.dozeo_appleGame.web.service.account.Oauth2UnlinkService;
 import com.project.dozeo_appleGame.web.service.account.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class UserApi {
 
     private final UserService userService;
+    private final Oauth2UnlinkService oauth2UnlinkService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
@@ -41,10 +43,12 @@ public class UserApi {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String token = jwtUtil.createToken(userDetails.getUsername(), userDetails.getUsername());
 
-            return ResponseEntity.ok(new JwtResponse(token));
+            return ResponseEntity.ok()
+                    .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", new JwtResponse(token)));
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
+            return ResponseEntity.badRequest()
+                    .body(new CMRespDTO<>(HttpStatus.BAD_REQUEST.value(), "Failed", "로그인 실패"));
         }
     }
 
@@ -81,6 +85,24 @@ public class UserApi {
                 .body(new CMRespDTO<>(HttpStatus.OK.value(), "Login info retrieved", response));
     }
 
+    @PostMapping("/oauth2/unlink")
+    public ResponseEntity<?> unlinkOauth2(@RequestBody UnlinkRequestDto unlinkRequestDto){
+        String provider = unlinkRequestDto.getProvider();
+        String accessToken = unlinkRequestDto.getAccessToken();
+        Long index = unlinkRequestDto.getId();
+
+        try {
+            oauth2UnlinkService.unlink(provider, accessToken);
+            oauth2UnlinkService.removeOauth2User(index);
+            return ResponseEntity.ok()
+                    .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", null));
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new CMRespDTO<>(HttpStatus.BAD_REQUEST.value(), "잘못된 사용자 : ", provider));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new CMRespDTO<>(HttpStatus.BAD_REQUEST.value(), "연결 해제 실패: ", e.getMessage()));
+        }
+    }
+
     @GetMapping("/principal")
     public ResponseEntity<?> principal(@AuthenticationPrincipal Object principal){
         Map<String, Object> userInfo = userService.separateUserOfLoginType(principal);
@@ -99,7 +121,16 @@ public class UserApi {
         userService.updateUserInfo(id, dto);
 
         return ResponseEntity.ok()
-                .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", null));
+                .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", true));
+    }
+
+    @PostMapping("/change/password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestDto request, @AuthenticationPrincipal CustomUserDetails userDetails){
+        Long userIndex = userDetails.getUser().getId();
+        userService.changePassword(userIndex, request.getCurrentPassword(), request.getChangePassword());
+
+        return ResponseEntity.ok()
+                .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", true));
     }
 
 }

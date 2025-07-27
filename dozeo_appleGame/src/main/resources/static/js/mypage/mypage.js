@@ -1,12 +1,12 @@
 window.onload = () => {
     HeaderService.getInstance().loadHeader();
-    MypageService.getInstacne().loadMyPageInfo();
+    MypageService.getInstance().loadMyPageInfo();
 }
 
 class MypageApi {
     static #instance = null;
 
-    static getInstacne() {
+    static getInstance() {
         if (this.#instance == null) {
             this.#instance = new MypageApi();
         }
@@ -50,12 +50,69 @@ class MypageApi {
         }
     }
 
+    async unlinkOauth2(provider, id) {
+        try {
+            const accessToken = localStorage.getItem("token");
+
+            if (!accessToken) {
+                console.error("토큰이 없습니다. 로그인 먼저 필요.");
+                return;
+            }
+
+            const response = await fetch(`/api/user/oauth2/unlink`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${accessToken}`
+                },
+                body: JSON.stringify({ provider, accessToken, id }),
+            });
+
+            const resJson = response.json();
+            return resJson;
+        } catch (error) {
+            console.error("소셜 로그인 연동 해제 중 예외 발생 : ", error)
+        }
+    }
+
+    async changePassword(updateData) {
+        try {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                console.error("토큰이 없습니다. 로그인 먼저 필요.");
+                return;
+            }
+            const response = await fetch("api/user/change/password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                credentials: "include",
+                body: JSON.stringify(updateData)
+            });
+
+            const data = await response.json().catch(() => null);
+            if (!response.ok) {
+                const errorMessage = (data && data.message) || "Failed";
+                throw new Error(errorMessage);
+            }
+
+            return data;
+
+        } catch (error) {
+            console.error("비밀번호 변경 실패 :", error.message);
+            return null;
+        }
+    }
+
 }
 
 class MypageService {
     static #instance = null;
 
-    static getInstacne() {
+    static getInstance() {
         if (this.#instance == null) {
             this.#instance = new MypageService();
         }
@@ -71,6 +128,8 @@ class MypageService {
 
         myPage.innerHTML = html;
         this.updateMyPageInfo();
+        ComponentEvent.getInstance().clickEventOfUnlinkOauth2();
+        ComponentEvent.getInstance().clickEventUpdatePasswordBtn();
     }
 
     getUserType(type) {
@@ -152,7 +211,7 @@ class MypageService {
                         input.disabled = true;
                     }
                 });
-                await MypageApi.getInstacne().submitMyInfo(this.collectFromData());
+                await MypageApi.getInstance().submitMyInfo(this.collectFromData());
                 updateBtn.textContent = "정보 수정";
                 isEditMode = false;
             }
@@ -167,7 +226,93 @@ class MypageService {
         }
 
     }
-
-
 }
 
+class ComponentEvent {
+    static #instacne = null;
+
+    static getInstance() {
+        if (this.#instacne == null) {
+            this.#instacne = new ComponentEvent();
+        }
+        return this.#instacne;
+    }
+
+    async clickEventOfUnlinkOauth2() {
+        const unlinkBtn = document.querySelector(".btn-social-unlink");
+
+        if (!unlinkBtn) {
+            console.warn("소셜 연동 해제 버튼이 없습니다.");
+            return;
+        }
+
+        unlinkBtn.addEventListener("click", async () => {
+            try {
+                const data = await PrincipalApi.getInstance().getPrincipal();
+                await MypageApi.getInstance().unlinkOauth2(data.provider, data.id);
+                window.location.href = "/main";
+                localStorage.removeItem("token");
+            } catch (error) {
+                console.error(error);
+            }
+
+        });
+    }
+
+    async clickEventUpdatePasswordBtn() {
+        const updateBtn = document.querySelector(".btn-update-password");
+
+        const modal = document.getElementById('modal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const changePasswordInput = document.getElementById('changePassword');
+
+        updateBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            currentPasswordInput.value = '';
+            changePasswordInput.value = '';
+            currentPasswordInput.focus();
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        confirmBtn.addEventListener('click', async () => {
+            const data = await this.inputData();
+            MypageApi.getInstance().changePassword(data);
+
+            this.showToast("비밀변호 변경이 완료되었습니다.");
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 1500);
+ 
+        });
+    }
+
+    async inputData() {
+        return {
+            currentPassword: document.getElementById('currentPassword').value,
+            changePassword: document.getElementById('changePassword').value
+        }
+    }
+
+    showToast(message) {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 1500);
+    }
+}

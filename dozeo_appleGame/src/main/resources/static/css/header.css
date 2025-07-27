@@ -15,6 +15,11 @@
   cursor: pointer;
 }
 
+.header-logo-title{
+  color: white;
+  font-size: 20px;
+}
+
 .auth-buttons{
   display: flex;
   justify-content: center;

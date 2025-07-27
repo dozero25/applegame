@@ -14,6 +14,10 @@ public class PrincipalDetails implements UserDetails{
     @Getter
     private final User user;
 
+    public User getUser(){
+        return user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();

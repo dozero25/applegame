@@ -218,4 +218,17 @@ public class UserService {
         user.setNickname(dto.getNickname());
         user.setEmail(dto.getEmail());
     }
+
+    @Transactional
+    public void changePassword(Long id, String currentPassword, String changePassword){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("유저 없음"));
+
+        if(!passwordEncoder.matches(currentPassword, user.getPassword())){
+            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        user.setPassword(passwordEncoder.encode(changePassword));
+        userRepository.save(user);
+    }
 }

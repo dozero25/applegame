@@ -1,20 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,100,200,300);
 
-body {
-    margin: 0;
-    font-family: sans-serif;
-}
-
-a {
-    color: #666;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #4FDA8C;
-}
-
-/* BODY */
 main {
     color: #666;
     font: 16px/26px "Raleway", sans-serif;
@@ -25,15 +10,12 @@ main {
 
 }
 
-
-/* LOGIN */
 .login {
     margin: 0;
     width: 100%;
     height: 100%;
 }
 
-/* WRAP */
 .wrap {
     position: static;
     margin: auto;
@@ -304,7 +286,6 @@ main {
     transform: translate(-16px, 20px);
 }
 
-/* CIRCLE EFFECT */
 #toggle-terms:after {
     position: absolute;
     width: 100%;
@@ -355,7 +336,6 @@ main {
     opacity: 0;
 }
 
-/* CLOSE ANIMATION*/
 @keyframes show_close {
     0% {
         opacity: 0;

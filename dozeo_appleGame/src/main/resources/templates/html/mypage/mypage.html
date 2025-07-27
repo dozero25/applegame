@@ -16,9 +16,24 @@
 
     <main class="main-container">
         <div class="mypage-container">
-            
+
+        </div>
+        <div>
+            <div id="modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span id="closeModalBtn" class="close">&times;</span>
+                    <h2>비밀번호를 입력해주세요.</h2>
+                    <div class="chagnePassword-input-box">
+                        <input type="password" id="currentPassword" class="changeInput" placeholder="현재 비밀번호" />
+                        <input type="password" id="changePassword" class="changeInput" placeholder="변경할 비밀번호" />
+                    </div>
+                    
+                    <button class="confirmBtn" id="confirmBtn">확인</button>
+                </div>
+            </div>
         </div>
     </main>
+    <div id="toast-container" class="toast-container"></div>
 </body>
 <script src="/static/js/principal/principal.js"></script>
 <script src="/static/js/header/header.js"></script>
