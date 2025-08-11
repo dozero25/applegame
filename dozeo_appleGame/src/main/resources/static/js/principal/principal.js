@@ -22,6 +22,7 @@ class PrincipalApi {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
             });
 
             if (!response.ok) {

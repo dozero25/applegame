@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <title>OAuth2 Redirect</title>
@@ -12,7 +12,7 @@
 
       if (token) {
         localStorage.setItem("token", token);
-        window.location.href = "/main";
+        window.location.href = "/";
       } else {
         window.location.href = "/login";
       }

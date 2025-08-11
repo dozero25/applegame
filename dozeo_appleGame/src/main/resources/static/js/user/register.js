@@ -17,9 +17,10 @@ class RegisterApi {
 
     async registerUserInfo(userData) {
         try {
-            const response = await fetch(`http://localhost:8000/api/user/signup`, {
+            const response = await fetch(`/api/user/signup`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(userData)
             });
 
@@ -42,11 +43,12 @@ class RegisterApi {
 
     async guestLoginForRegister() {
         try {
-            const response = await fetch(`http://localhost:8000/api/user/guest/signup`, {
+            const response = await fetch(`/api/user/guest/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
-                }
+                },
+                credentials: "include"
             });
 
             const data = await response.json();
@@ -126,7 +128,7 @@ class RegisterService {
                     localStorage.setItem("token", result.data.token);
                     localStorage.setItem("username", result.data.username);
 
-                    window.location.href = "/main";
+                    window.location.href = "/";
                 } else {
                     console.error("게스트 로그인 실패", data);
                 }

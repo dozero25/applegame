@@ -32,7 +32,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
         String token = jwtUtil.createToken(username, username);
 
-        String redirectUrl = "http://localhost:8000/oauth2/redirect?token=" + token;
+        String redirectUrl = "https://dozerogame.com//oauth2/redirect?token=" + token;
 
         response.sendRedirect(redirectUrl);
 

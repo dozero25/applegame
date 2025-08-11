@@ -29,11 +29,12 @@ class LoginService {
                 const response = await fetch("/api/user/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
+                    credentials: "include",
                     body: JSON.stringify({ username, password }),
                 });
 
                 if (!response.ok) {
-                    console.error("로그인 실패");
+                    console.error("로그인 실패", error);
                     return;
                 }
 
@@ -42,7 +43,7 @@ class LoginService {
 
                 if (token) {
                     localStorage.setItem("token", token);
-                    window.location.href = "/main";
+                    window.location.href = "/";
                 } else {
                     console.error("토큰이 없습니다.");
                 }

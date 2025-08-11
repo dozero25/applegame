@@ -11,8 +11,8 @@ class HeaderApi {
     async logoutForm() {
         try {
             await fetch('/api/user/logout', { method: 'POST' });
-            localStorage.removeItem('token'); // JWT 토큰 삭제
-            window.location.href = '/main';
+            localStorage.removeItem('token');
+            window.location.href = '/';
         } catch (error) {
             console.error('로그아웃 실패', error);
         }
@@ -50,7 +50,7 @@ class HeaderService {
         }
 
         header.innerHTML = `
-                <div class="header-logo"><a href="/main" class="header-logo-title">DozeroGameHub</a></div>
+                <div class="header-logo"><a href="/" class="header-logo-title">DozeroGameHub</a></div>
                 <div class="auth-buttons">
                     ${this.principal == null
                 ? `<a href="/login"><button class="loginBtn" id="loginBtn">로그인</button></a>`
@@ -67,11 +67,8 @@ class HeaderService {
             logoutBtn.addEventListener("click", async (e) => {
                 e.preventDefault();
                 try {
-                    await fetch("/logout", { method: "POST" });
+                    new HeaderApi().logoutForm();
 
-                    localStorage.removeItem("token");
-
-                    window.location.href = "/main";
                 } catch (error) {
                     console.error("로그아웃 실패:", error);
                 }

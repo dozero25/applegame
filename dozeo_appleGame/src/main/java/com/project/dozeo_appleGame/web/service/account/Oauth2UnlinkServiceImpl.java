@@ -5,16 +5,12 @@ import com.project.dozeo_appleGame.entity.User;
 import com.project.dozeo_appleGame.repository.account.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -42,11 +38,9 @@ public class Oauth2UnlinkServiceImpl implements Oauth2UnlinkService {
     @Override
     public void removeOauth2User(Long id){
         Optional<User> optionalUser = userRepository.findById(id);
-        System.out.println("1");
         if(optionalUser.isEmpty()){
             throw new IllegalArgumentException("해당 ID를 가진 사용자가 존재하지 않습니다: " + id);
         }
-        System.out.println("2");
         userRepository.deleteById(id);
     }
 

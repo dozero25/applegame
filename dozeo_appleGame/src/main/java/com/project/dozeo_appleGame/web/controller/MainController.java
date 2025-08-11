@@ -8,29 +8,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainController {
 
-    @GetMapping("/main")
+    @GetMapping("/")
     public String main(){
-        return "html/main/main.html";
+        return "html/main/main";
     }
 
     @GetMapping("/login")
     public String login(){
-        return "html/main/login.html";
+        return "html/main/login";
     }
 
     @GetMapping("/login/error")
     public String loginError(){
-        return "html/main/login_error.html";
+        return "html/main/login_error";
     }
 
     @GetMapping("/apple")
     public String appleMain(){
-        return "html/apple/main.html";
+        return "html/apple/main";
     }
 
     @GetMapping("/apple/game")
     public String appleGame(){
-        return "html/apple/game.html";
+        return "html/apple/game";
 
     }
 
@@ -42,6 +42,6 @@ public class MainController {
 
     @GetMapping("/mypage")
     public String myPage(){
-        return "html/mypage/mypage.html";
+        return "html/mypage/mypage";
     }
 }

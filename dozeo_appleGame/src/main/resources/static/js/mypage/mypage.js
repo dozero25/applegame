@@ -65,6 +65,7 @@ class MypageApi {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${accessToken}`
                 },
+                credentials: "include",
                 body: JSON.stringify({ provider, accessToken, id }),
             });
 
@@ -250,7 +251,7 @@ class ComponentEvent {
             try {
                 const data = await PrincipalApi.getInstance().getPrincipal();
                 await MypageApi.getInstance().unlinkOauth2(data.provider, data.id);
-                window.location.href = "/main";
+                window.location.href = "/";
                 localStorage.removeItem("token");
             } catch (error) {
                 console.error(error);

@@ -75,7 +75,7 @@ public class UserApi {
 
 
     @GetMapping("/auth/login")
-    public ResponseEntity<?> login(@RequestParam(value = "error", required = false) String error,
+    public ResponseEntity<?> autologin(@RequestParam(value = "error", required = false) String error,
                                    @RequestParam(value = "exception", required = false) String exception) {
         Map<String, String> response = new HashMap<>();
         response.put("error", error);

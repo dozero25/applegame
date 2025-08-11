@@ -29,10 +29,6 @@ public class GameBoardApi {
         logicService.placeNumberWithLogic(0, 0, number);
         GameBoardDTO boardDTO = boardService.getBoard();
 
-//        for(int i = 0; i < boardDTO.getBoard().length; i++){
-//            System.out.println(Arrays.toString(boardDTO.getBoard()[i]));
-//        }
-
         return ResponseEntity.ok()
                 .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", boardDTO));
     }
