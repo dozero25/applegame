@@ -1,8 +1,6 @@
 package com.project.dozeo_appleGame.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,13 +13,29 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 @Entity
+@Table(
+        name = "score",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "game_type"})
+        }
+)
 public class Score {
 
     @Id
-    @GeneratedValue
-    private Long id;
-    private String nickName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long scoreId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "game_type", nullable = false)
+    private String gameType;
+
+    @Column(name = "points", nullable = false)
     private int points;
-    private LocalDateTime datePlayed;
+
+    @Column(name = "update_time", nullable = false)
+    private LocalDateTime updateTime;
 
 }

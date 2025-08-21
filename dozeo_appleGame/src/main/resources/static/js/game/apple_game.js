@@ -5,7 +5,6 @@ window.onload = async () => {
     compEvent.startTimer();
 }
 
-
 class GameSetApi {
     static #instance = null;
 
@@ -33,7 +32,33 @@ class GameSetApi {
 
         } catch (error) {
             console.error('게임 시작 중 오류:', error);
-            return null;
+            return error;
+        }
+    }
+
+    async saveOrUpdatePoints(userId, gameType, points){
+        try {
+            const response = await fetch('/api/score/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    userId: userId,
+                    gameType: gameType,
+                    points: points
+                })
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            const result = await response.json();
+            return result.data;
+
+        } catch (error) {
+            console.error('게임 시작 중 오류:', error);
+            return error;
         }
     }
 
@@ -303,7 +328,8 @@ class ComponentEvent {
     }
 
     startTimer() {
-        const totalTime = 120000;
+        // const totalTime = 120000;
+        const totalTime = 5000;
         const bar = document.getElementById("timerBar");
         const startTime = Date.now();
 
@@ -314,6 +340,7 @@ class ComponentEvent {
 
         function showGameOverModel() {
             modal.classList.remove('hidden');
+            ComponentEvent.getInstance().getScore();
         }
 
         const timerInterval = setInterval(() => {
@@ -332,6 +359,15 @@ class ComponentEvent {
                 }
             }
         }, 50);
+    }
 
+    async getScore(){
+        const userData = await PrincipalApi.getInstance().getPrincipal();
+
+        if(!userData){ 
+            throw new Error('not login user');
+        } else {
+            GameSetApi.getInstance().saveOrUpdatePoints(userData.userIndex, "apple_game", this.score);
+        }
     }
 }

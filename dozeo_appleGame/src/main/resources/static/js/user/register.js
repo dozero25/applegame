@@ -120,7 +120,6 @@ class RegisterService {
         const guestLoginBtn = document.querySelector(".guest-input-button");
 
         guestLoginBtn.addEventListener("click", async () => {
-
             try {
                 const result = await RegisterApi.getInstance().guestLoginForRegister();      
 
