@@ -22,13 +22,21 @@
 
         <div style="margin-top: 20px;">
             
-            <button onclick="startGame()">게임 시작</button>
+            <button onclick="startNormalGame()">게임 시작</button>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button onclick="startChallengeGame()" style="font-size: 19px;">챌린지모드</button>
         </div>
     </div>
 
     <script>
-        function startGame() {
-            window.location.href = "/apple/game";
+        function startNormalGame() {
+            window.location.href = "/apple/game?mode=normal";
+        }
+
+        function startChallengeGame() {
+            window.location.href = "/apple/game?mode=challenge";
         }
 
         function goHome() {

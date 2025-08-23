@@ -2,7 +2,16 @@ window.onload = async () => {
     await GameSetService.getInstance().showInfoGameLogic();
     const compEvent = ComponentEvent.getInstance();
     compEvent.clickBtn();
-    compEvent.startTimer();
+
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
+
+    if (mode === "challenge") {
+        compEvent.startChallengeTimer();
+    } else {
+        compEvent.startTimer();
+    }
+
 }
 
 class GameSetApi {
@@ -36,7 +45,7 @@ class GameSetApi {
         }
     }
 
-    async saveOrUpdatePoints(userId, gameType, points){
+    async saveOrUpdatePoints(userId, gameType, points) {
         try {
             const response = await fetch('/api/score/add', {
                 method: 'POST',
@@ -225,6 +234,11 @@ class ComponentEvent {
             completeSound.currentTime = 0;
             completeSound.play();
 
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("mode") === "challenge" && this.addExtraTime) {
+                const extraSeconds = Math.floor(Math.random() * 2) + 1; // 1~2
+                this.addExtraTime(extraSeconds * 1000);
+            }
         } else {
             // 선택 해제 및 테두리 제거
             selectedCells.forEach(cell => {
@@ -324,16 +338,24 @@ class ComponentEvent {
     }
 
     resetGame() {
-        window.location.href = "/apple/game";
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("mode") === "normal") {
+            window.location.href = "/apple/game?mode=normal";
+        } else {
+            window.location.href = "/apple/game?mode=challenge";
+        }
     }
 
     startTimer() {
         const totalTime = 120000;
-        // const totalTime = 5000;
+        let remainingTime = totalTime;
+
         const bar = document.getElementById("timerBar");
         const startTime = Date.now();
+        const timerText = document.getElementById("timer");
 
         bar.style.transform = 'scaleX(1)';
+        timerText.textContent = Math.ceil(remainingTime / 1000);
 
         const modal = document.getElementById('gameModal');
         const finalScoreElement = document.getElementById('finalScore');
@@ -349,25 +371,71 @@ class ComponentEvent {
             const percent = Math.max(0, 1 - (elapsed / totalTime));
             bar.style.transform = `scaleX(${percent})`;
 
+            timerText.textContent = Math.ceil(timeLeft  / 1000);
+
 
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 showGameOverModel();
 
-                if(finalScoreElement){
+                if (finalScoreElement) {
                     finalScoreElement.textContent = this.score;
                 }
             }
         }, 50);
     }
 
-    async getScore(){
+    startChallengeTimer() {
+        let remainingTime = 10000;
+        const bar = document.getElementById("timerBar");
+        const modal = document.getElementById('gameModal');
+        const finalScoreElement = document.getElementById('finalScore');
+        const timerText = document.getElementById("timer");
+
+        timerText.textContent = Math.ceil(remainingTime / 1000);
+
+        bar.style.transform = 'scaleX(1)';
+
+        const showGameOverModel = () => {
+            modal.classList.remove('hidden');
+            ComponentEvent.getInstance().getScore();
+        };
+
+        const timerInterval = setInterval(() => {
+            remainingTime -= 50;
+            timerText.textContent = Math.ceil(remainingTime / 1000);
+            if (remainingTime < 0) remainingTime = 0;
+
+            const percent = remainingTime / 20000;
+            bar.style.transform = `scaleX(${percent})`;
+
+            if (remainingTime <= 0) {
+                clearInterval(timerInterval);
+                showGameOverModel();
+                if (finalScoreElement) finalScoreElement.textContent = this.score;
+            }
+        }, 50);
+
+        this.addExtraTime = (extraMs) => {
+            remainingTime += extraMs;
+            timerText.textContent = Math.ceil(remainingTime / 1000);
+        };
+    }
+
+    async getScore() {
         const userData = await PrincipalApi.getInstance().getPrincipal();
 
-        if(!userData){ 
+        if (!userData) {
             throw new Error('not login user');
         } else {
-            GameSetApi.getInstance().saveOrUpdatePoints(userData.userIndex, "사과게임", this.score);
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("mode") === "normal") {
+                GameSetApi.getInstance().saveOrUpdatePoints(userData.userIndex, "사과게임", this.score);
+            } else {
+                GameSetApi.getInstance().saveOrUpdatePoints(userData.userIndex, "사과게임_챌린지모드", this.score);
+            }
+
+
         }
     }
 }
