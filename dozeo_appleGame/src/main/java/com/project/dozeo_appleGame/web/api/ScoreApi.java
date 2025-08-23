@@ -1,6 +1,5 @@
 package com.project.dozeo_appleGame.web.api;
 
-import com.project.dozeo_appleGame.entity.Score;
 import com.project.dozeo_appleGame.security.custom.CustomUserDetails;
 import com.project.dozeo_appleGame.web.dto.CMRespDTO;
 import com.project.dozeo_appleGame.web.dto.ScoreRequest;
@@ -30,7 +29,7 @@ public class ScoreApi {
     @GetMapping("/list")
     public ResponseEntity<?> getScoreByUserWithRank(@AuthenticationPrincipal CustomUserDetails userDetails){
         List<ScoreRequest> list = scoreService.getScoreByUserWithRank(userDetails.getUser().getId());
-        
+
         return ResponseEntity.ok()
                 .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", list));
     }

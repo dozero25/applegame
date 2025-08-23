@@ -262,7 +262,6 @@ class MypageService {
     async showInfoScoreList() {
         const rankContainer = document.querySelector(".mypage-article");
         const response = await MypageApi.getInstance().getUserScoreList();
-        console.log(response.data);
 
         rankContainer.innerHTML = ``;
 

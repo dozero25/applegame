@@ -2,7 +2,6 @@ package com.project.dozeo_appleGame.repository;
 
 import com.project.dozeo_appleGame.entity.Score;
 import com.project.dozeo_appleGame.entity.User;
-import com.project.dozeo_appleGame.web.dto.ScoreRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +20,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
                     "FROM ("+
                     " SELECT user_id, game_type, points, " +
                     " RANK() OVER (PARTITION BY game_type ORDER BY points DESC) AS ranking " +
-                    " FROM apple.score" +
+                    " FROM `applegame-dozero`.score" +
                     " ) ranked " +
                     " WHERE user_id = :userId",
             nativeQuery = true

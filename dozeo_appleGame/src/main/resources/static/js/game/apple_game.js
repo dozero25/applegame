@@ -328,8 +328,8 @@ class ComponentEvent {
     }
 
     startTimer() {
-        // const totalTime = 120000;
-        const totalTime = 5000;
+        const totalTime = 120000;
+        // const totalTime = 5000;
         const bar = document.getElementById("timerBar");
         const startTime = Date.now();
 
