@@ -10,12 +10,13 @@
         margin-top: 50px;
     }
 
-    .mypage-container {
+    .mypage-container, .mypage-ranking-container {
         background-color: #c6c6c6;
         width: 100%;
         max-width: 500px;
         padding: 30px;
         border-radius: 12px;
+        margin: 0px 10px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
@@ -170,4 +171,26 @@
         opacity: 0.95;
         font-size: 14px;
         animation: fadeOut 3s forwards;
+    }
+
+    .mypage-article{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 16px;                     
+        align-items: stretch;
+        margin: 16px 0;
+    }
+
+    .ranking-card{
+        background-color: #ccc;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .game-type, .game-point, .game-rank{
+        font-weight: bold;
+        display: block;
+        color: #444444;
+        margin-bottom: 5px;
     }

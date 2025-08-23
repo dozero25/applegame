@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +38,18 @@ public class ScoreService {
             score.setUpdateTime(LocalDateTime.now());
             scoreRepository.save(score);
         }
+    }
+
+    public List<ScoreRequest> getScoreByUserWithRank(Long userId) {
+        List<Object[]> results = scoreRepository.findUserScoresWithRanking(userId);
+
+        return results.stream()
+                .map(o -> ScoreRequest.builder()
+                        .userId(((Number)o[0]).longValue())
+                        .gameType((String)o[1])
+                        .points(((Number)o[2]).intValue())
+                        .ranking(((Number)o[3]).intValue())
+                        .build())
+                .collect(Collectors.toList());
     }
 }

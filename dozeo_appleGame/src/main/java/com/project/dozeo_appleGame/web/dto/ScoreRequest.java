@@ -13,4 +13,5 @@ public class ScoreRequest {
     private Long userId;
     private String gameType;
     private int points;
+    private int ranking;
 }

@@ -1,6 +1,8 @@
 window.onload = () => {
     HeaderService.getInstance().loadHeader();
     MypageService.getInstance().loadMyPageInfo();
+    MypageService.getInstance().showInfoScoreList();
+
 }
 
 class MypageApi {
@@ -52,9 +54,9 @@ class MypageApi {
 
     async unlinkOauth2(provider, id) {
         try {
-            const accessToken = localStorage.getItem("token");
+            const token = localStorage.getItem("token");
 
-            if (!accessToken) {
+            if (!token) {
                 console.error("토큰이 없습니다. 로그인 먼저 필요.");
                 return;
             }
@@ -63,14 +65,14 @@ class MypageApi {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
+                    "Authorization": `Bearer ${token}`
                 },
                 credentials: "include",
                 body: JSON.stringify({ provider, accessToken, id }),
             });
 
-            const resJson = response.json();
-            return resJson;
+            const data = response.json();
+            return data;
         } catch (error) {
             console.error("소셜 로그인 연동 해제 중 예외 발생 : ", error)
         }
@@ -104,6 +106,36 @@ class MypageApi {
 
         } catch (error) {
             console.error("비밀번호 변경 실패 :", error.message);
+            return null;
+        }
+    }
+
+    async getUserScoreList() {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                console.error("토큰이 없습니다. 로그인 먼저 필요.");
+                return;
+            }
+
+            const response = await fetch("/api/score/list", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                credentials: "include",
+            });
+
+            if (!response.ok) {
+                console.error("사용자 정보 요청 실패:", response.status);
+                return null;
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("사용자 정보 요청 중 오류:", error);
             return null;
         }
     }
@@ -225,8 +257,32 @@ class MypageService {
             nickname: document.getElementById("nickname").value,
             email: document.getElementById("email").value
         }
-
     }
+
+    async showInfoScoreList() {
+        const rankContainer = document.querySelector(".mypage-article");
+        const response = await MypageApi.getInstance().getUserScoreList();
+        console.log(response.data);
+
+        rankContainer.innerHTML = ``;
+
+        let html = "";
+        response.data.forEach(r => {
+            html += `
+            <article class="ranking-grid">
+                <div class="ranking-card">
+                    <label class="game-type">${r.gameType}</label>
+                    <p class="game-point">내 점수 : ${r.points}점</p>
+                    <p class="game-rank">내 순위 : ${r.ranking}위</p>
+                </div>
+            </article>
+        `;
+        });
+
+        rankContainer.innerHTML = html;
+    }
+
+
 }
 
 class ComponentEvent {
@@ -294,7 +350,7 @@ class ComponentEvent {
             setTimeout(() => {
                 modal.style.display = 'none';
             }, 1500);
- 
+
         });
     }
 

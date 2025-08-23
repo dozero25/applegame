@@ -367,7 +367,7 @@ class ComponentEvent {
         if(!userData){ 
             throw new Error('not login user');
         } else {
-            GameSetApi.getInstance().saveOrUpdatePoints(userData.userIndex, "apple_game", this.score);
+            GameSetApi.getInstance().saveOrUpdatePoints(userData.userIndex, "사과게임", this.score);
         }
     }
 }
