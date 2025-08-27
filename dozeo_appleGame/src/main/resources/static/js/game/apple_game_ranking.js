@@ -58,20 +58,22 @@ class AppleGameRankingService {
         let html_challenge = "";
 
         for (let i = 1; i <= 10; i++) {
-            // i번째 순위 데이터가 있으면 가져오고, 없으면 빈칸
             const user = normal_data.data[i - 1];
             const nickname = user ? user.nickname : "";
+            const points = user ? user.points : "";
 
             html_normal += `
-                <li><span>${i}위</span><span>${nickname}</span></li>
+                <li><span>${i}위</span><span>${nickname}</span><span>${points}</span></li>
             `;
         }
 
         for (let i = 1; i <= 10; i++) {
             const user = challenge_data.data[i - 1];
             const nickname = user ? user.nickname : "";
+            const points = user ? user.points : "";
+
             html_challenge += `
-                <li><span>${i}위</span><span>${nickname}</span></li>
+                <li><span>${i}위</span><span>${nickname}</span><span>${points}</span></li>
             `;
         }
 

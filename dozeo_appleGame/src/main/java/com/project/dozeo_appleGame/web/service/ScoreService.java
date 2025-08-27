@@ -61,6 +61,7 @@ public class ScoreService {
                 .map(o -> RankingDto.builder()
                         .nickname((String)o[0])
                         .ranking(((Number)o[1]).intValue())
+                        .points(((Number)o[2]).intValue())
                         .build())
                 .collect(Collectors.toList());
     }
