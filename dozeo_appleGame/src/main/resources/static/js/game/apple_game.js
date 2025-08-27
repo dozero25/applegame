@@ -70,7 +70,6 @@ class GameSetApi {
             return error;
         }
     }
-
 }
 
 class GameSetService {

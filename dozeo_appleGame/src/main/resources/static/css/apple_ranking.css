@@ -1,0 +1,108 @@
+body,
+html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Jua', sans-serif, sans-serif;
+    background: linear-gradient(to bottom, #ffecd2 0%, #fcb69f 100%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+.ranking-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #5c3a2e;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.ranking-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 2000px;
+    margin: 0 auto;
+}
+
+.ranking-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+}
+
+.ranking-card h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.ranking-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ranking-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    background-color: #f9fafb;
+}
+
+.ranking-list li:nth-child(1) {
+    background-color: #ffe082;
+    font-weight: bold;
+}
+
+.ranking-list li span:last-child {
+  display: inline-block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+
+.ranking-list li:nth-child(2) {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+.ranking-list li:nth-child(3) {
+    background-color: #ffcc80;
+    font-weight: bold;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.back-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    background-color: #4f46e5;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #3730a3;
+}

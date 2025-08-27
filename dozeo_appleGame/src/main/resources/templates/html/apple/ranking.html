@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>사과 게임</title>
+    <link rel="stylesheet" href="/static/css/apple_ranking.css">
+    <link rel="stylesheet" href="/static/css/reset.css" />
+</head>
+
+<body class="ranking-body">
+    <div class="subtitle-container">
+        <h1 class="ranking-title">🍎 사과게임 랭킹 🍎</h1>
+    </div>
+
+    <div class="ranking-container">
+        <div class="ranking-card">
+            <h2>노멀 모드</h2>
+            <ul class="ranking-list normal">
+                
+            </ul>
+        </div>
+
+        <div class="ranking-card">
+            <h2>챌린지 모드</h2>
+            <ul class="ranking-list challenge">
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button class="back-btn" onclick="history.back()">돌아가기</button>
+    </div>
+</body>
+<script src="/static/js/game/apple_game_ranking.js"></script>
+
+</html>

@@ -2,6 +2,7 @@ package com.project.dozeo_appleGame.web.api;
 
 import com.project.dozeo_appleGame.security.custom.CustomUserDetails;
 import com.project.dozeo_appleGame.web.dto.CMRespDTO;
+import com.project.dozeo_appleGame.web.dto.RankingDto;
 import com.project.dozeo_appleGame.web.dto.ScoreRequest;
 import com.project.dozeo_appleGame.web.service.ScoreService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,14 @@ public class ScoreApi {
         return ResponseEntity.ok()
                 .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", list));
     }
+
+    @GetMapping("/ranking/{gameType}")
+    public ResponseEntity<?> getAllUserRankingOfGameType(@PathVariable String gameType){
+        List<RankingDto> list = scoreService.getAllUserRankingOfGameType(gameType);
+
+        return ResponseEntity.ok()
+                .body(new CMRespDTO<>(HttpStatus.OK.value(), "Successfully", list));
+    }
+
 
 }

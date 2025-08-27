@@ -4,6 +4,7 @@ import com.project.dozeo_appleGame.entity.Score;
 import com.project.dozeo_appleGame.entity.User;
 import com.project.dozeo_appleGame.repository.ScoreRepository;
 import com.project.dozeo_appleGame.repository.account.UserRepository;
+import com.project.dozeo_appleGame.web.dto.RankingDto;
 import com.project.dozeo_appleGame.web.dto.ScoreRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,17 @@ public class ScoreService {
                         .gameType((String)o[1])
                         .points(((Number)o[2]).intValue())
                         .ranking(((Number)o[3]).intValue())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public List<RankingDto> getAllUserRankingOfGameType(String gameType){
+        List<Object[]> results = scoreRepository.findUserAllScoreOfAppleGameWithRanking(gameType);
+
+        return results.stream()
+                .map(o -> RankingDto.builder()
+                        .nickname((String)o[0])
+                        .ranking(((Number)o[1]).intValue())
                         .build())
                 .collect(Collectors.toList());
     }

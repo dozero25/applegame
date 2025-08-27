@@ -34,6 +34,12 @@ public class MainController {
 
     }
 
+    @GetMapping("/apple/ranking")
+    public String appleGameRanking(){
+        return "html/apple/ranking";
+
+    }
+
     @GetMapping("/oauth2/redirect")
     public String oauth2Index(@RequestParam(required = false) String token, Model model) {
         model.addAttribute("token", token);
