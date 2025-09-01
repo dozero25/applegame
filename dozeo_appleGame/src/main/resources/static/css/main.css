@@ -7,6 +7,7 @@ a {
   all: unset;
 }
 
+
 .game-container {
   display: flex;
   flex-wrap: wrap;
@@ -21,10 +22,10 @@ a {
   padding: 10px 20px;
 }
 
-
 .game-card {
-  width: 1000px;
-  height: 200px;
+  flex: 1 1 300px;
+  max-width: 1000px;
+  min-height: 180px;   
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 1rem;
@@ -33,7 +34,7 @@ a {
 }
 
 .game-card-img {
-  width: 30%;
+  flex: 1;
 }
 
 .game-card-img img {
@@ -44,6 +45,20 @@ a {
 }
 
 .game-card-explain{
-  width: 70%;
+  flex: 2;
   margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .game-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game-card-img, .game-card-explain {
+    width: 100%;
+  }
 }
